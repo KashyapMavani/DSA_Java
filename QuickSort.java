@@ -1,41 +1,50 @@
+import java.util.Arrays;
+
 class QuickSort {
 
-    public static void main(String[] args) {
-        int[] arr = {7,1,5,3,6,4};
-        int ans = bhai(arr);
-        System.out.println(ans);
-    }
+    static void swap(int arr[], int lp, int rp) {
+        int temp = arr[lp];
+        arr[lp] = arr[rp];
+        arr[rp] = temp;
+    } 
 
-    static int bhai(int[] prices) {
+    static void quicksort(int arr[], int lp, int rp) {
+        int p = lp + (rp - lp) / 2; // Set pivot to the middle element
+        int pivot = arr[p];
 
-        // int min = 10000;
-        // int max = 0;
-        int maxprofit = 0;
-        int profit =0;
-        int n = prices.length-1;
+        int s = lp;
+        int e = rp;
 
-        for(int i = 0; i < n; i++ ){
-            for(int j = i+1; j < n; j++ ){
-                
-                if(prices[i] < prices[j]){
-                    profit = prices[j] - prices[i];
-                }
-                if(profit > maxprofit){
-                    maxprofit = profit;
-                }
+        if (s >= e) {
+            return;
+        }
+
+        while (e >= s) {
+
+            while (arr[s] < pivot) {
+                s++;
+            }
+            while (arr[e] > pivot) {
+                e--;
             }
 
-            // if(prices[i] < min){
-            //     min = prices[i];
-            // }
-            // else if( prices[i] > min){
-            //     max = prices[i];  
-                
-            //     if(( max-min ) > profit){
-            //         profit = max - min;
-            // }
-            // }
+            if (e >= s) {
+                swap(arr, s, e);
+                s++;
+                e--;
+            }
         }
-        return maxprofit;
+
+            quicksort(arr, lp, e);
+            quicksort(arr, s, rp);
+        
+    }
+
+    public static void main(String[] args) {
+        int[] array = {20, 30, 5, 11, 88, 56, 63}; 
+        int s = 0;
+        int e = array.length - 1;                           
+        quicksort(array, s, e);  
+        System.out.println(Arrays.toString(array));
     }
 }
